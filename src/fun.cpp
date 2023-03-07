@@ -79,8 +79,7 @@ unsigned int faStr3(const char* str) {
                 is_word = true;
             }
             count++;
-        }
-        else {
+        } else {
             if (is_word) {
                 is_word = false;
                 sum += count;
