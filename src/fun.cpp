@@ -32,46 +32,43 @@ unsigned int faStr1(const char* str) {
 }
 
 
-unsigned int faStr2(const char* str)
-{
+unsigned int faStr2(const char *str) {
     unsigned int count = 0;
-    bool is_word = false;
-    for (int i = 0; i < strlen(str); i++)
-    {
-        if (isupper(str[i]))
-        {
-            if (!is_word)
-            {
-                is_word = true;
-                if (i == 0 || isspace(str[i - 1]))
-                {
-                    bool only_lowercase = true;
-                    for (int j = i + 1; j < strlen(str); j++)
-                    {
-                        if (isalpha(str[j]) && isupper(str[j]))
-                        {
-                            only_lowercase = false;
-                            break;
-                        }
-                        if (!isalpha(str[j]))
-                        {
-                            break;
-                        }
-                    }
-                    if (only_lowercase)
-                    {
-                        count++;
-                    }
+    bool isUppercase = false;
+    bool isAllLowercase = true;
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (isalpha(str[i])) {
+            if (islower(str[i])) {
+                isAllLowercase = true;
+            } else if (isupper(str[i])) {
+                if (i == 0) {
+                    isUppercase = true;
+                } else if (isspace(str[i-1])) {
+                    isUppercase = true;
+                } else {
+                    isUppercase = false;
+                }
+                if (!isUppercase) {
+                    isAllLowercase = false;
                 }
             }
+        } else if (isspace(str[i])) {
+            if (isUppercase && isAllLowercase) {
+                count++;
+            }
+            isUppercase = false;
+            isAllLowercase = true;
+        } else {
+            isUppercase = false;
+            isAllLowercase = false;
         }
-        else if (!isalpha(str[i]))
-        {
-            is_word = false;
-        }
+    }
+    if (isUppercase && isAllLowercase) {
+        count++;
     }
     return count;
 }
+
 
 unsigned int faStr3(const char* str)
 {
